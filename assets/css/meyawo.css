@@ -12229,13 +12229,28 @@ pre .code {
 
 .pageTopCenterLogo{
   position: absolute;
-  top: 50%;
+  top: 2.5em;
   left: 40%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
+  height: 450px;
+}
+
+@media only screen and (max-width: 800px) {
+  .pageTopCenterLogo {
+    height: 2500px;
+    left: 30%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .pageTopCenterLogo {
+    height: 250px;
+    left: 40%;
+  }
 }
 
 .contact_mbar{
