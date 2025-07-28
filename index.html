@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG Filter Liquid Glass Buttons</title>
+    <title>Személyre szabható oldal</title>
     <style>
         :root {
             --lg-bg-color: rgba(255, 255, 255, 0.25);
@@ -21,10 +21,37 @@
             align-items: center;
             justify-content: center;
             font-family: sans-serif;
-            background: url("https://images.unsplash.com/photo-1551384963-cccb0b7ed94b?q=80&w=3247&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D") center/cover;
-            animation: bg-move 5s ease-in-out infinite alternate;
+            background-color: #000;
         }
 
+        /* ========== HÁTTÉR ANIMÁCIÓ (JAVÍTVA) ========== */
+        #background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            /* ITT TÖRTÉNT A VÁLTOZÁS: Visszaállítva az eredeti mozgás-animáció */
+            animation: bg-move 10s ease-in-out infinite alternate;
+        }
+
+        .background-slide.active {
+            opacity: 1;
+        }
+
+        /* ITT TÖRTÉNT A VÁLTOZÁS: Ez az eredeti animáció kulcskockája */
         @keyframes bg-move {
             from {
                 background-position: center center;
@@ -48,13 +75,8 @@
             }
         }
         
-        /* Késleltetések az elemek lépcsőzetes megjelenéséhez */
         .profile-container { animation-delay: 0.2s; }
         .name-container { animation-delay: 0.4s; }
-        .glass-container:nth-of-type(1) { animation-delay: 0.6s; }
-        .glass-container:nth-of-type(2) { animation-delay: 0.7s; }
-        .glass-container:nth-of-type(3) { animation-delay: 0.8s; }
-
 
         /* ========== PROFILKÉP ========== */
         .profile-container {
@@ -78,7 +100,7 @@
             box-sizing: border-box;
         }
         
-        /* ========== NÉV KONTÉNER (MÓDOSÍTVA) ========== */
+        /* ========== NÉV KONTÉNER ========== */
         .name-container {
             position: relative;
             display: flex;
@@ -87,18 +109,16 @@
             width: 500px;
             box-sizing: border-box;
             background: transparent;
-            /* Eltérő lekerekítés, hogy ne gombnak tűnjön */
             border-radius: 1.5rem; 
             overflow: hidden;
-            /* Finomabb árnyék, mint a gombokon */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), 0 0 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2.5rem; /* Nagyobb margó alatta */
+            margin-bottom: 2.5rem;
             padding: 1rem 2.5rem;
         }
         
         .name-text {
-            font-size: 1.9rem; /* Nagyobb betűméret */
-            font-weight: 700; /* Félkövér kiemelés */
+            font-size: 1.9rem;
+            font-weight: 700;
             text-shadow: 0 1px 5px rgba(0,0,0,0.3);
             position: relative;
             color: var(--lg-text);
@@ -134,7 +154,6 @@
             transition: all 0.3s ease-in-out;
         }
         
-        /* ========== ÉRINTÉSI ANIMÁCIÓ A GOMBOKON ========== */
         .glass-container:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 15px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 0, 0, 0.15);
@@ -146,7 +165,7 @@
         }
 
 
-        /* ========== ÜVEG RÉTEGEK (Közös a névre és gombokra) ========== */
+        /* ========== ÜVEG RÉTEGEK ========== */
         .glass-filter {
             position: absolute;
             inset: 0;
@@ -173,7 +192,7 @@
                 inset 0 0 5px var(--lg-highlight);
         }
         
-        /* ========== GOMB TARTALOM (Content) ========== */
+        /* ========== GOMB TARTALOM ========== */
         .glass-content {
             position: relative;
             z-index: 3;
@@ -192,7 +211,6 @@
             filter: brightness(1.1);
         }
 
-        /* A logók közös stílusa */
         .social-logo {
             width: 34px;
             height: 34px;
@@ -207,7 +225,6 @@
             transform: rotate(-5deg);
         }
         
-        /* A gombok szövegének közös stílusa */
         .button-text {
             font-size: 1.5rem;
             font-weight: 600;
@@ -218,69 +235,28 @@
 </head>
 <body>
 
-    <!-- Profilkép Konténer -->
+    <div id="background-container">
+        <div class="background-slide"></div>
+        <div class="background-slide"></div>
+    </div>
+
     <div class="profile-container animated-onload">
         <div class="glass-filter"></div>
         <div class="glass-overlay"></div>
         <div class="glass-specular"></div>
-        <img src="https://cdn.prod.website-files.com/62d84e447b4f9e7263d31e94/6399a4d27711a5ad2c9bf5cd_ben-sweet-2LowviVHZ-E-unsplash-1.jpeg" alt="Profilkép" class="profile-image">
+        <img src="" alt="" class="profile-image" id="profileImage">
     </div>
 
-    <!-- Név Konténer -->
-    <div class="name-container animated-onload">
+    <div class="name-container animated-onload" id="nameContainer">
         <div class="glass-filter"></div>
-        <div class="glass-overlay"></div>
+        <div class="glass-overlay" id="nameOverlay"></div>
         <div class="glass-specular"></div>
-        <div class="name-text">Példa Albert</div>
+        <div class="name-text" id="nameText"></div>
     </div>
 
-
-    <!-- A fő konténer, amely egymás alá rendezi a gombokat -->
-    <div class="container container--vertical">
-
-        <!-- Instagram Gomb -->
-        <div class="glass-container animated-onload">
-            <div class="glass-filter"></div>
-            <div class="glass-overlay"></div>
-            <div class="glass-specular"></div>
-            <a href="#" class="glass-content">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="social-logo">
-                    <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
-                </svg>
-                <span class="button-text">Instagram</span>
-            </a>
-        </div>
-        
-        <!-- Facebook -->
-
-        <div class="glass-container animated-onload">
-            <div class="glass-filter"></div>
-            <div class="glass-overlay"></div>
-            <div class="glass-specular"></div>
-            <a href="#" class="glass-content">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="social-logo">
-                    <path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/>
-                </svg>
-                <span class="button-text">Facebook</span>
-            </a>
-        </div>
-
-        <!-- TikTok Gomb -->
-        <div class="glass-container animated-onload">
-            <div class="glass-filter"></div>
-            <div class="glass-overlay"></div>
-            <div class="glass-specular"></div>
-            <a href="#" class="glass-content">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="social-logo">
-                    <path d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"/>
-                </svg>
-                <span class="button-text">TikTok</span>
-            </a>
-        </div>
-
+    <div class="container container--vertical" id="buttonsContainer">
     </div>
 
-    <!-- Rejtett SVG szűrő definíció -->
     <div style="display:none;">
         <svg>
             <filter id="lg-dist" x="0%" y="0%" width="100%" height="100%">
@@ -290,6 +266,106 @@
             </filter>
         </svg>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const configUrl = 'assets/config.json';
+
+            fetch(configUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Hálózati válasz nem volt rendben: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    applyConfig(data);
+                })
+                .catch(error => {
+                    console.error('Hiba a konfigurációs fájl betöltése közben:', error);
+                });
+        });
+
+        function applyConfig(config) {
+            if (config.background && config.background.images && config.background.images.length > 0) {
+                startBackgroundSlider(config.background);
+            }
+
+            if (config.profile) {
+                const profileImage = document.getElementById('profileImage');
+                profileImage.src = config.profile.image || '';
+                profileImage.alt = config.profile.altText || 'Profilkép';
+            }
+
+            if (config.name) {
+                const nameText = document.getElementById('nameText');
+                const nameOverlay = document.getElementById('nameOverlay');
+                nameText.textContent = config.name.text || 'Nincs név megadva';
+                nameText.style.color = config.name.textColor || '#ffffff';
+                nameOverlay.style.backgroundColor = config.name.backgroundColor || 'rgba(255, 255, 255, 0.25)';
+            }
+            
+            if (config.buttons && Array.isArray(config.buttons)) {
+                const buttonsContainer = document.getElementById('buttonsContainer');
+                buttonsContainer.innerHTML = ''; 
+
+                config.buttons.forEach((buttonData, index) => {
+                    const glassContainer = document.createElement('div');
+                    glassContainer.className = 'glass-container animated-onload';
+                    glassContainer.style.animationDelay = `${0.6 + index * 0.1}s`;
+
+                    glassContainer.innerHTML = `
+                        <div class="glass-filter"></div>
+                        <div class="glass-overlay" style="background-color: ${buttonData.backgroundColor || 'rgba(255, 255, 255, 0.25)'};"></div>
+                        <div class="glass-specular"></div>
+                        <a href="${buttonData.url || '#'}" class="glass-content">
+                            ${buttonData.icon || ''}
+                            <span class="button-text" style="color: ${buttonData.textColor || '#ffffff'};">${buttonData.text || ''}</span>
+                        </a>
+                    `;
+                    
+                    buttonsContainer.appendChild(glassContainer);
+                });
+            }
+        }
+
+        function startBackgroundSlider(backgroundConfig) {
+            const slides = document.querySelectorAll('.background-slide');
+            const images = backgroundConfig.images;
+            const transitionTime = backgroundConfig.transition || 1500;
+            const duration = backgroundConfig.duration || 8000;
+
+            if (images.length === 0 || slides.length < 2) {
+                if (images.length > 0) {
+                   document.querySelector('.background-slide').style.backgroundImage = `url('${images[0].url}')`;
+                   document.querySelector('.background-slide').classList.add('active');
+                }
+                return;
+            }
+
+            slides.forEach(slide => {
+                slide.style.transition = `opacity ${transitionTime / 1000}s ease-in-out`;
+            });
+
+            let currentIndex = 0;
+            let currentSlide = 0;
+
+            slides[0].style.backgroundImage = `url('${images[currentIndex].url}')`;
+            slides[0].classList.add('active');
+
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % images.length;
+                const nextSlide = (currentSlide + 1) % 2;
+                
+                slides[nextSlide].style.backgroundImage = `url('${images[currentIndex].url}')`;
+                slides[nextSlide].classList.add('active');
+                slides[currentSlide].classList.remove('active');
+                currentSlide = nextSlide;
+
+            }, duration);
+        }
+
+    </script>
 
 </body>
 </html>
