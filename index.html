@@ -118,7 +118,8 @@
 
         @media screen and (max-width: 1500px) {
             .name-container {
-                width: 60%;
+                width: 90%;
+                text-align: center;
             }
         }
 
@@ -307,6 +308,7 @@
                 const nameText = document.getElementById('nameText');
                 const nameOverlay = document.getElementById('nameOverlay');
                 nameText.textContent = config.name.text || 'Nincs név megadva';
+                document.title = config.name.text || 'Nincs név megadva';
                 nameText.style.color = config.name.textColor || '#ffffff';
                 nameOverlay.style.backgroundColor = config.name.backgroundColor || 'rgba(255, 255, 255, 0.25)';
             }
